@@ -1,0 +1,11 @@
+.vscode
+node_modules
+build
+yarn-error.log
+yarn.lock
+
+.env
+process.json
+
+npm-debug.log
+dump.rdb
