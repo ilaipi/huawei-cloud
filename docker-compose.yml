@@ -6,7 +6,6 @@ services:
       context: .
       dockerfile: ./Dockerfile
     container_name: huawei
-    command: npm run admin
     env_file: .env
     volumes:
       - /data/nginx/acme.sh-lingdou:/ssl/lingdou
