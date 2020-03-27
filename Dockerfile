@@ -12,11 +12,11 @@ RUN npm install --registry=https://registry.npm.taobao.org
 
 FROM base AS src
 COPY ./ $BASE_DIR/
-RUN rm -fr src .git .env .env.example .gitignore Dockerfile package-lock.json yarn.lock .eslintrc
+RUN rm -fr .git .env .env.example .gitignore Dockerfile package-lock.json yarn.lock .eslintrc
 
 # ---- Copy Files/Build ----
 FROM base AS release
 COPY --from=dependencies $BASE_DIR/node_modules/ ./node_modules/
 COPY --from=src $BASE_DIR/ $BASE_DIR/
 
-CMD ["node"]
+CMD tail -f /dev/null
