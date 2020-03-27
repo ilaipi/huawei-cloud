@@ -1,3 +1,5 @@
+import fs from 'fs';
+
 import { commonHeader } from '../utils/huawei';
 
 const baseURL = 'https://elb.cn-east-3.myhuaweicloud.com';
