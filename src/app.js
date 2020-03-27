@@ -15,7 +15,10 @@ const ctx = {
 
 const bootstrap = async () => {
   await getToken(ctx);
-  await ctx.supported[process.argv[2]](ctx);
+  const m = [process.argv[2]];
+  if (m && ctx.supported[m]) {
+    await ctx.supported[m](ctx);
+  }
 };
 
 bootstrap();
