@@ -14,15 +14,15 @@ const refreshCer = async ctx => {
       url: `/v2.0/lbaas/certificates/${certificate_id}`,
       data: {
         name: certificate_name,
-        private_key: fs.readFileSync('/ssl/lingdou/*.adouhealth.com/*.adouhealth.com.key'),
-        certificate: fs.readFileSync('/ssl/lingdou/*.adouhealth.com/*.adouhealth.com.cer')
+        private_key: fs.readFileSync('/ssl/lingdou/*.adouhealth.com/*.adouhealth.com.key', { encoding: 'utf-8' }),
+        certificate: fs.readFileSync('/ssl/lingdou/*.adouhealth.com/*.adouhealth.com.cer', { encoding: 'utf-8' })
       },
       headers: {
         ...commonHeader(ctx)
       }
     }, 'PUT');
   } catch (err) {
-    console.log('====fefresh error====', err);
+    console.log('====fefresh error====', err.response.data);
   }
 };
 
