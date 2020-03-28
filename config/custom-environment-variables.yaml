@@ -1,8 +1,8 @@
 auth:
   identity:
-    name: 'USER_NAME'
-    domain:
-      name: 'IDENTITY_DOMAIN_NAME'
-    password: 'USER_PASSWORD'
-  scope:
-    domain: 'SCOPE_DOMAIN_ID'
+    password:
+      user:
+        name: 'USER_NAME'
+        domain:
+          name: 'IDENTITY_DOMAIN_NAME'
+        password: 'USER_PASSWORD'

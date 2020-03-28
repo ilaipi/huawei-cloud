@@ -1,1 +1,13 @@
 auth:
+  identity:
+    methods:
+      - 'password'
+    password:
+      user:
+  scope:
+    project:
+      name: 'cn-east-3'
+
+host:
+  token: 'https://iam.cn-east-3.myhuaweicloud.com'
+  elb: 'https://elb.cn-east-3.myhuaweicloud.com'
