@@ -17,8 +17,8 @@ const getToken = async ctx => {
         }
       },
       scope: {
-        domain: {
-          id: config.auth.scope.domain
+        project: {
+          name: 'cn-east-3'
         }
       }
     }
