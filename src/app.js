@@ -2,14 +2,15 @@ import * as consts from './utils/consts';
 import * as request from './utils/request';
 
 import { getToken } from './token/';
-import { refreshCer } from './ssl/';
+import { refreshCer, getCer } from './ssl/';
 
 const ctx = {
   request,
   consts,
   supported: {
     getToken,
-    refreshCer
+    refreshCer,
+    getCer
   }
 };
 

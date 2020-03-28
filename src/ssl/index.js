@@ -22,4 +22,13 @@ const refreshCer = async ctx => {
   }, 'PUT');
 };
 
-export { refreshCer };
+const getCer = async ctx => {
+  await ctx.request.get(`/v2.0/lbaas/certificates/${certificate_id}`, null, {
+    baseURL,
+    headers: {
+      ...commonHeader(ctx)
+    }
+  });
+};
+
+export { refreshCer, getCer };
