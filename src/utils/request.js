@@ -13,7 +13,11 @@ const request = async (_options, method = 'GET') => {
       method
     }
   );
-  return axios(options);
+  try {
+    return await axios(options);
+  } catch (err) {
+    console.log('====axios error====', err.response.data);
+  }
 };
 
 /**
