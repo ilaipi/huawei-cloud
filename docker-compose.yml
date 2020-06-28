@@ -9,3 +9,4 @@ services:
     env_file: .env
     volumes:
       - /data/nginx/acme.sh-lingdou:/ssl/lingdou
+      - /data/nginx/acme.sh-sureemed:/ssl/sureemed
