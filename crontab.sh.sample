@@ -1,0 +1,10 @@
+#! /bin/sh
+
+# 通过定时任务实现每天把本地证书同步到华为云
+
+cd /home/huawei-cloud
+
+/usr/local/bin/docker-compose exec -T -e CERTIFICATE_ID=YOUR_CERT_ID -e DOMAIN_NAME=CERT_DOMAIN -e SSL_ROOT=DIR_IN_DOCKER_CONTAINER huawei npm start -- refreshCer
+
+# 此命令配合nodejs程序，nodejs负责输出登录命令 然后交给host去执行
+/usr/local/bin/docker-compose exec -T huawei npm start -- dockerLogin | grep login_command: | awk -F 'docker login ' '{print $2}' | xargs docker login

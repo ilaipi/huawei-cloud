@@ -1,0 +1,41 @@
+{
+  "name": "huawei-cloud",
+  "version": "1.0.0",
+  "description": "华为api 完成一些运维工作 比如自动更新https证书",
+  "main": "app.js",
+  "scripts": {
+    "start": "babel-node src/app.js --max-http-header-size=80000",
+    "dev": "nodemon --exec babel-node src/app.js --max-http-header-size=80000",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/ilaipi/huawei-cloud.git"
+  },
+  "keywords": [
+    "华为api"
+  ],
+  "author": "Billy Yang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ilaipi/huawei-cloud/issues"
+  },
+  "homepage": "https://github.com/ilaipi/huawei-cloud#readme",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "config": "^3.3.1",
+    "dotenv": "^8.2.0",
+    "js-yaml": "^3.13.1",
+    "lodash": "^4.17.19",
+    "moment": "^2.28.0",
+    "qiniu": "^7.3.2"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.0",
+    "@babel/node": "^7.8.7",
+    "@babel/plugin-proposal-object-rest-spread": "^7.9.0",
+    "@babel/preset-env": "^7.9.0",
+    "nodemon": "^2.0.2"
+  }
+}

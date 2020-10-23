@@ -1,0 +1,13 @@
+auth:
+  identity:
+    password:
+      user:
+        name: 'USER_NAME'
+        domain:
+          name: 'IDENTITY_DOMAIN_NAME'
+        password: 'USER_PASSWORD'
+
+qiniu:
+  accessToken:
+    ak: 'QINIU_AK'
+    sk: 'QINIU_SK'
