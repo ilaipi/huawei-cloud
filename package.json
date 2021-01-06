@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/ilaipi/huawei-cloud#readme",
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "config": "^3.3.1",
     "dotenv": "^8.2.0",
     "js-yaml": "^3.13.1",
