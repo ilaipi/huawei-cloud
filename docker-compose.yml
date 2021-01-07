@@ -6,6 +6,7 @@ services:
       context: .
       dockerfile: ./Dockerfile
     env_file: .env
+    restart: always
     volumes:
       - /data/nginx/acme.sh-lingdou:/ssl/lingdou
       - /data/nginx/acme.sh-sureemed:/ssl/sureemed
