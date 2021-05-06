@@ -55,7 +55,7 @@ const refreshHuaweiCdnCer = async ctx => {
     console.warn('必须指定证书id和证书域名（支持泛域名）');
     return;
   }
-  ctx.config.auth.scope = { domain: { name: ctx.config.auth.identity.password.user.name } };
+  ctx.config.auth.scope = { domain: { name: ctx.config.auth.identity.password.user.domain.name } };
   const token = await ctx.supported.getToken(ctx);
   const cert = `${SSL_ROOT}/${DOMAIN_NAME}`;
   const certificate = fs.readFileSync(`${cert}/fullchain.cer`, { encoding: 'utf-8' });
