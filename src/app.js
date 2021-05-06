@@ -3,7 +3,7 @@ import * as request from './utils/request';
 import config from './utils/config';
 
 import { getToken, getQiniuToken, getQiniuTokenV2 } from './token/';
-import { refreshCer, getCer, refreshQiniuCer } from './ssl/';
+import { refreshCer, refreshHuaweiCdnCer, getCer, refreshQiniuCer } from './ssl/';
 import { login as dockerLogin } from './docker/';
 
 const ctx = {
@@ -15,6 +15,7 @@ const ctx = {
     getQiniuToken,
     getQiniuTokenV2,
     refreshCer,
+    refreshHuaweiCdnCer,
     getCer,
     refreshQiniuCer,
     dockerLogin

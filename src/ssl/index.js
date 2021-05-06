@@ -46,10 +46,44 @@ const refreshCer = async ctx => {
 };
 
 /**
+ * 更新cdn域名证书
+ * CERTIFICATE_ID: 域名id
+ * DOMAIN_NAME：证书名字
+ */
+const refreshHuaweiCdnCer = async ctx => {
+  if (!CERTIFICATE_ID || !DOMAIN_NAME) {
+    console.warn('必须指定证书id和证书域名（支持泛域名）');
+    return;
+  }
+  ctx.config.auth.scope = { domain: { name: ctx.config.auth.identity.password.user.name } };
+  const token = await ctx.supported.getToken(ctx);
+  const cert = `${SSL_ROOT}/${DOMAIN_NAME}`;
+  const certificate = fs.readFileSync(`${cert}/fullchain.cer`, { encoding: 'utf-8' });
+  await ctx.request.request({
+    baseURL: 'https://cdn.myhuaweicloud.com',
+    url: `/v1.0/cdn/domains/${CERTIFICATE_ID}/https-info`,
+    data: {
+      https: {
+        cert_name: DOMAIN_NAME,
+        force_redirect_https: 0,
+        http2: 0,
+        https_status: 2,
+        certificate_type: 0,
+        private_key: fs.readFileSync(`${cert}/${DOMAIN_NAME}.key`, { encoding: 'utf-8' }),
+        certificate: certificate.replace('\n\n', '\n')
+      }
+    },
+    headers: {
+      ...commonHeader(token)
+    }
+  }, 'PUT');
+};
+
+/**
  * 获取证书
  */
 const getCer = async ctx => {
-  const token = await ctx.supported.getToken();
+  const token = await ctx.supported.getToken(ctx);
   await ctx.request.get(`/v2.0/lbaas/certificates/${CERTIFICATE_ID}`, null, {
     baseURL: ctx.config.host.elb,
     headers: {
@@ -162,4 +196,4 @@ const refreshQiniuCer = async ctx => {
   // console.log('====refresh qiniu cert done====', domains.data);
 };
 
-export { refreshCer, getCer, refreshQiniuCer };
+export { refreshCer, refreshHuaweiCdnCer, getCer, refreshQiniuCer };
