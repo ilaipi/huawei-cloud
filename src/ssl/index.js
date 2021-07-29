@@ -70,7 +70,7 @@ const refreshHuaweiCdnCer = async ctx => {
         https_status: 2,
         certificate_type: 0,
         private_key: fs.readFileSync(`${cert}/${DOMAIN_NAME}.key`, { encoding: 'utf-8' }),
-        certificate: certificate.replace('\n\n', '\n')
+        certificate: certificate.replace(/\n\n/g, '\n')
       }
     },
     headers: {
