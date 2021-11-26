@@ -32,7 +32,7 @@ const refreshCer = async ctx => {
   }
   const token = await ctx.supported.getToken(ctx);
   const cert = `${SSL_ROOT}/${DOMAIN_NAME}`;
-  await ctx.request.request({
+  const result = await ctx.request.request({
     baseURL: ctx.config.host.elb,
     url: `/v2.0/lbaas/certificates/${CERTIFICATE_ID}`,
     data: {
@@ -43,6 +43,7 @@ const refreshCer = async ctx => {
       ...commonHeader(token)
     }
   }, 'PUT');
+  console.log('=========refreshCer========', result);
 };
 
 /**
@@ -59,7 +60,7 @@ const refreshHuaweiCdnCer = async ctx => {
   const token = await ctx.supported.getToken(ctx);
   const cert = `${SSL_ROOT}/${DOMAIN_NAME}`;
   const certificate = fs.readFileSync(`${cert}/fullchain.cer`, { encoding: 'utf-8' });
-  await ctx.request.request({
+  const result = await ctx.request.request({
     baseURL: 'https://cdn.myhuaweicloud.com',
     url: `/v1.0/cdn/domains/${CERTIFICATE_ID}/https-info`,
     data: {
@@ -77,6 +78,7 @@ const refreshHuaweiCdnCer = async ctx => {
       ...commonHeader(token)
     }
   }, 'PUT');
+  console.log('=========refreshHuaweiCdnCer========', result);
 };
 
 /**
@@ -84,12 +86,13 @@ const refreshHuaweiCdnCer = async ctx => {
  */
 const getCer = async ctx => {
   const token = await ctx.supported.getToken(ctx);
-  await ctx.request.get(`/v2.0/lbaas/certificates/${CERTIFICATE_ID}`, null, {
+  const result = await ctx.request.get(`/v2.0/lbaas/certificates/${CERTIFICATE_ID}`, null, {
     baseURL: ctx.config.host.elb,
     headers: {
       ...commonHeader(token)
     }
   });
+  console.log('=========getCer========', result);
 };
 
 /**
