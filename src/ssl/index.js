@@ -12,7 +12,7 @@ import { accessHeader } from '../utils/qiniu';
  * DOMAIN_LIST 使用证书的域名列表，多个域名之间用英文分号连接 only for qiniu
  * SSL_ROOT 证书位置
  */
-const { CERTIFICATE_ID, DOMAIN_NAME, DOMAIN_LIST, SSL_ROOT = '/ssl' } = process.env;
+const { CERTIFICATE_ID, DOMAIN_NAME, DOMAIN_LIST, SSL_ROOT = '/ssl', LIVE_DOMAIN_NAME } = process.env;
 
 /**
  * 刷新elb的证书
@@ -119,10 +119,11 @@ const refreshQiniuCer = async ctx => {
   const { config } = ctx;
   const cert = `${SSL_ROOT}/${DOMAIN_NAME}`;
   let token = await ctx.supported.getQiniuToken(ctx);
+  const certName = `${moment(new Date()).format('YYYYMMDD')}_${DOMAIN_NAME}`;
   const resp = await ctx.request.post(
     `${config.host.qiniu.sslcert}/sslcert`,
     {
-      name: `${moment(new Date()).format('YYYYMMDD')}_${DOMAIN_NAME}`,
+      name: certName,
       common_name: DOMAIN_NAME,
       pri: fs.readFileSync(`${cert}/${DOMAIN_NAME}.key`, { encoding: 'utf-8' }),
       ca: fs.readFileSync(`${cert}/fullchain.cer`, { encoding: 'utf-8' })
@@ -134,6 +135,24 @@ const refreshQiniuCer = async ctx => {
     }
   );
   const { certID } = resp.data;
+  try {
+    if (LIVE_DOMAIN_NAME) {
+      const url = `https://pili.qiniuapi.com/v2/hubs/sureemed/domains/${LIVE_DOMAIN_NAME}/cert`;
+      token = await ctx.supported.getQiniuTokenV2(ctx, { url, method: 'POST', reqContentType: 'application/json', reqBody: JSON.stringify(data) });
+      await ctx.request.post(
+        url,
+        { certName },
+        {
+          headers: {
+            Authorization: token,
+            'Content-Type': 'application/json',
+          },
+        },
+      );
+    }
+  } catch (err) {
+    console.log('======update live cert error', err);
+  }
 
   // 2 设置域名证书
   let url;
