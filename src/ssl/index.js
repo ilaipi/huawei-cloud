@@ -12,7 +12,7 @@ import { accessHeader } from '../utils/qiniu';
  * DOMAIN_LIST 使用证书的域名列表，多个域名之间用英文分号连接 only for qiniu
  * SSL_ROOT 证书位置
  */
-const { CERTIFICATE_ID, DOMAIN_NAME, DOMAIN_LIST, SSL_ROOT = '/ssl', LIVE_DOMAIN_NAME } = process.env;
+const { CERTIFICATE_ID, DOMAIN_NAME, DOMAIN_LIST, SSL_ROOT = '/ssl', LIVE_DOMAIN_NAME, LIVE_HUB } = process.env;
 
 /**
  * 刷新elb的证书
@@ -136,9 +136,9 @@ const refreshQiniuCer = async ctx => {
   );
   const { certID } = resp.data;
   try {
-    if (LIVE_DOMAIN_NAME) {
-      const url = `https://pili.qiniuapi.com/v2/hubs/sureemed/domains/${LIVE_DOMAIN_NAME}/cert`;
-      const data = { certName };
+    if (LIVE_DOMAIN_NAME && LIVE_HUB) {
+      const url = `https://pili.qiniuapi.com/v2/hubs/${LIVE_HUB}/domains/${LIVE_DOMAIN_NAME}/cert`;
+      const data = { certName: certID };
       token = await ctx.supported.getQiniuTokenV2(ctx, { url, method: 'POST', reqContentType: 'application/json', reqBody: JSON.stringify(data) });
       await ctx.request.post(
         url,
