@@ -170,8 +170,8 @@ const refreshQiniuCer = async ctx => {
       ...options,
     }, 'PUT');
   }
-  // 3 删除旧证书 昨天的证书因为还在生效无法删除 删除前天的即可
-  const old = `${moment(new Date()).subtract(2, 'days').format('YYYYMMDD')}_${DOMAIN_NAME}`;
+  // 3 删除旧证书 任务改为每月执行 删除上个月今天的证书即可
+  const old = `${moment(new Date()).subtract(1, 'months').format('YYYYMMDD')}_${DOMAIN_NAME}`;
   // 获取全部证书，删除名字是昨天证书
   token = await ctx.supported.getQiniuToken(ctx);
   options = { headers: { Authorization: token } };
