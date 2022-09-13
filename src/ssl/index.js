@@ -138,10 +138,11 @@ const refreshQiniuCer = async ctx => {
   try {
     if (LIVE_DOMAIN_NAME) {
       const url = `https://pili.qiniuapi.com/v2/hubs/sureemed/domains/${LIVE_DOMAIN_NAME}/cert`;
+      const data = { certName };
       token = await ctx.supported.getQiniuTokenV2(ctx, { url, method: 'POST', reqContentType: 'application/json', reqBody: JSON.stringify(data) });
       await ctx.request.post(
         url,
-        { certName },
+        data,
         {
           headers: {
             Authorization: token,
