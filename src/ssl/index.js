@@ -31,7 +31,10 @@ const refreshCer = async ctx => {
     return;
   }
   const token = await ctx.supported.getToken(ctx);
-  const cert = `${SSL_ROOT}/${DOMAIN_NAME}`;
+  let cert = `${SSL_ROOT}/${DOMAIN_NAME}`;
+  if (!fs.existsSync(cert)) {
+    cert = `${cert}_ecc`;
+  }
   const result = await ctx.request.request({
     baseURL: ctx.config.host.elb,
     url: `/v2.0/lbaas/certificates/${CERTIFICATE_ID}`,
@@ -136,6 +139,7 @@ const refreshQiniuCer = async ctx => {
   );
   const { certID } = resp.data;
   try {
+    console.log('========update live cert 1=====', LIVE_DOMAIN_NAME, LIVE_HUB);
     if (LIVE_DOMAIN_NAME && LIVE_HUB) {
       const url = `https://pili.qiniuapi.com/v2/hubs/${LIVE_HUB}/domains/${LIVE_DOMAIN_NAME}/cert`;
       const data = { certName: certID };
@@ -151,6 +155,7 @@ const refreshQiniuCer = async ctx => {
         },
       );
     }
+    console.log('========update live cert success=====');
   } catch (err) {
     console.log('======update live cert error', err);
   }
